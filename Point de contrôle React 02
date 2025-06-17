@@ -1,0 +1,144 @@
+Structure de projet attendue
+
+src/
+│
+├── App.js
+├── players.js
+├── components/
+│   ├── Player.js
+│   └── PlayerList.js
+
+Étape 1 : Création du projet
+Dans le terminal :
+
+npx create-react-app fifa-cards
+cd fifa-cards
+npm install react-bootstrap bootstrap
+
+ ajoute de Bootstrap Dans src/index.js :
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+Étape 2 : Fichier players.js
+
+// src/players.js
+
+const players = [
+  {
+    name: "Kylian Mbappé",
+    team: "Paris Saint-Germain",
+    nationality: "France",
+    jerseyNumber: 7,
+    age: 25,
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Kylian_Mbapp%C3%A9_2019.jpg/440px-Kylian_Mbapp%C3%A9_2019.jpg"
+  },
+  {
+    name: "Lionel Messi",
+    team: "Inter Miami",
+    nationality: "Argentina",
+    jerseyNumber: 10,
+    age: 36,
+    image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Lionel_Messi_20180626.jpg"
+  },
+  {
+    name: "Erling Haaland",
+    team: "Manchester City",
+    nationality: "Norway",
+    jerseyNumber: 9,
+    age: 24,
+    image: "https://upload.wikimedia.org/wikipedia/commons/9/9b/Erling_Haaland_2023_%28cropped%29.jpg"
+  },
+  {
+    name: "Cristiano Ronaldo",
+    team: "Al-Nassr",
+    nationality: "Portugal",
+    jerseyNumber: 7,
+    age: 39,
+    image: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2018.jpg"
+  }
+];
+
+export default players;
+
+Étape 3 : Composant Player.js
+
+// src/components/Player.js
+import React from "react";
+import { Card } from "react-bootstrap";
+
+const cardStyle = {
+  width: "18rem",
+  margin: "1rem",
+  boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+  textAlign: "center"
+};
+
+const Player = ({
+  name = "Unknown",
+  team = "N/A",
+  nationality = "N/A",
+  jerseyNumber = 0,
+  age = 0,
+  image = "https://via.placeholder.com/150"
+}) => {
+  return (
+    <Card style={cardStyle}>
+      <Card.Img variant="top" src={image} alt={name} />
+      <Card.Body>
+        <Card.Title>{name}</Card.Title>
+        <Card.Text>
+          <strong>Équipe:</strong> {team} <br />
+          <strong>Nationalité:</strong> {nationality} <br />
+          <strong>Numéro:</strong> {jerseyNumber} <br />
+          <strong>Âge:</strong> {age}
+        </Card.Text>
+      </Card.Body>
+    </Card>
+  );
+};
+
+export default Player;
+
+Étape 4 : Composant PlayerList.js
+
+// src/components/PlayerList.js
+import React from "react";
+import Player from "./Player";
+import players from "../players";
+import { Container, Row, Col } from "react-bootstrap";
+
+const PlayerList = () => {
+  return (
+    <Container className="mt-4">
+      <Row>
+        {players.map((player, index) => (
+          <Col key={index} md={6} lg={4}>
+            <Player {...player} />
+          </Col>
+        ))}
+      </Row>
+    </Container>
+  );
+};
+
+export default PlayerList;
+
+ Étape 5 : Composant racine App.js
+
+// src/App.js
+import React from "react";
+import PlayerList from "./components/PlayerList";
+
+function App() {
+  return (
+    <div className="App">
+      <h1 className="text-center mt-4">Cartes de joueurs FIFA</h1>
+      <PlayerList />
+    </div>
+  );
+}
+
+export default App;
+
+
+
